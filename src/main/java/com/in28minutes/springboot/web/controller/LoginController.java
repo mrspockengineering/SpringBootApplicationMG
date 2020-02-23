@@ -40,13 +40,11 @@ public class LoginController {
 		if (!isValidUser) {
 //			System.out.println("invalid user");
 			model.put("errorMessage", "invalid credentials");
-			model.put("name", "komischer Name");
-			model.put("password", password_html);
 			return "login";
 		}
 		
-		model.put("name", name_html);		
-		model.put("password", password_html);	
+//		model.put("name", name_html);		
+//		model.put("password", password_html);	
 //		System.out.println("name is " + name);
 		return "welcome";
 	}
