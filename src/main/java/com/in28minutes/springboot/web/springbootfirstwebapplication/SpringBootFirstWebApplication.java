@@ -10,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan("com.in28minutes.springboot")
+@ComponentScan("com.in28minutes")		// @ComponentScan("com.in28minutes.springboot")		//
 @SpringBootApplication
 public class SpringBootFirstWebApplication {
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.in28minutes.DummyService;
 import com.in28minutes.springboot.web.service.LoginService;
 
 // login => "Hello World"
@@ -26,11 +27,24 @@ public class LoginController {
 	@Autowired
 	LoginService service;
 	
+	@Autowired
+	DummyService dummyService;
+	
 	@RequestMapping(value= "/login", method = RequestMethod.GET)
 	public String showLoginPage(ModelMap model) {
 //		model.put("name", name);		
 //		System.out.println("name is " + name);
 		return "login";
+	} 
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String showReturnPage(@RequestParam String name_html, @RequestParam String password_html, ModelMap model) {
+		boolean isValidUser = dummyService.validateUser(name_html, password_html);
+		if (!isValidUser) {
+			model.put("errorMessage", "invalid dummy credential");
+			return "login";
+		}
+		return "welcome";
 	}
 	
 	@RequestMapping(value= "/login", method = RequestMethod.POST)
