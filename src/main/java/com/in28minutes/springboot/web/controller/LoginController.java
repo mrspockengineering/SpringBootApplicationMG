@@ -41,25 +41,16 @@ public class LoginController {
 		boolean isValidUser = service.validateUser(name_html, password_html);
 		boolean isRealValidUser=dummyService.isValidate(name_html, password_html);
 
-		if (!isValidUser) {
+		if (!isValidUser && !isRealValidUser) {
 			
-			if (!isRealValidUser) {
 				model.put("errorMessage", "both invalid credentials");
 				return "login";
-			}
-			model.put("errorMessage", "invalid credentials 28min");
-			return "login";
-		}
+		} else {
 			
-		if (!isRealValidUser) {
-			model.put("errorMessage", "invalid credentials dummy");
-			return "login";
+			model.put("message", "successfull login: " + name_html);
+			model.put("name", name_html);
+			return "welcome";
 		}
-		
-//		model.put("name", name_html);		
-//		model.put("password", password_html);	
-//		System.out.println("name is " + name);
-		return "welcome";
 	}
 	
 	@RequestMapping("/hallo")
