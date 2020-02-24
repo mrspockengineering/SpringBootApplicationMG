@@ -12,6 +12,10 @@ import com.in28minutes.DummyService;
 import com.in28minutes.springboot.web.service.LoginService;
 
 // login => "Hello World"
+/**
+ * @author Erazer
+ *
+ */
 @Controller
 public class LoginController {
 	
@@ -36,20 +40,25 @@ public class LoginController {
 //		System.out.println("name is " + name);
 		return "login";
 	} 
+		
 	
+	// ambigous mapping
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String showReturnPage(@RequestParam String name_html, @RequestParam String password_html, ModelMap model) {
-		boolean isValidUser = dummyService.validateUser(name_html, password_html);
-		if (!isValidUser) {
-			model.put("errorMessage", "invalid dummy credential");
+		boolean isValidUser = service.validateUser(name_html, password_html);
+		boolean isValidUserDummy = dummyService.validateUser(name_html, password_html);
+
+		
+		if (!isValidUser && !isValidUserDummy) {
+			model.put("errorMessage", "invalid credentials");
 			return "login";
 		}
+		model.put("name", name_html);
 		return "welcome";
 	}
 	
-	@RequestMapping(value= "/login", method = RequestMethod.POST)
+/*	@RequestMapping(value= "/login", method = RequestMethod.POST)
 	public String showWelcomePage(@RequestParam String name_html, @RequestParam String password_html, ModelMap model) {
-		boolean isValidUser = service.validateUser(name_html, password_html);
 		
 		if (!isValidUser) {
 //			System.out.println("invalid user");
@@ -61,7 +70,7 @@ public class LoginController {
 //		model.put("password", password_html);	
 //		System.out.println("name is " + name);
 		return "welcome";
-	}
+	}*/
 	
 	@RequestMapping("/hallo")
 	@ResponseBody			// format html
