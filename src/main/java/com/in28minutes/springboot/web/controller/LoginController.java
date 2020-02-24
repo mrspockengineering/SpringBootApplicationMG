@@ -26,6 +26,9 @@ public class LoginController {
 	@Autowired
 	LoginService service;
 	
+	@Autowired
+	DummyService dummyService;
+	
 	@RequestMapping(value= "/login", method = RequestMethod.GET)
 	public String showLoginPage(ModelMap model) {
 //		model.put("name", name);		
@@ -36,10 +39,20 @@ public class LoginController {
 	@RequestMapping(value= "/login", method = RequestMethod.POST)
 	public String showWelcomePage(@RequestParam String name_html, @RequestParam String password_html, ModelMap model) {
 		boolean isValidUser = service.validateUser(name_html, password_html);
-		
+		boolean isRealValidUser=dummyService.isValidate(name_html, password_html);
+
 		if (!isValidUser) {
-//			System.out.println("invalid user");
-			model.put("errorMessage", "invalid credentials");
+			
+			if (!isRealValidUser) {
+				model.put("errorMessage", "both invalid credentials");
+				return "login";
+			}
+			model.put("errorMessage", "invalid credentials 28min");
+			return "login";
+		}
+			
+		if (!isRealValidUser) {
+			model.put("errorMessage", "invalid credentials dummy");
 			return "login";
 		}
 		
